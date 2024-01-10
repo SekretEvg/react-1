@@ -7,7 +7,7 @@ const Post = (props) => {
             <img src='https://img.freepik.com/premium-vector/bearded-man-avatar-man-vector-portrait_9385-36.jpg'/>
             {props.message}
             <div>
-                <span>{props.likeCount}</span>
+                <span>like: {props.likeCount}</span>
             </div>
         </div>
     );
