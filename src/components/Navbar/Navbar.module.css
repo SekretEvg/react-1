@@ -12,3 +12,7 @@
 .item a.activeLink {
     color: gold;
 }
+
+.sidebar {
+    margin-top: 100px;
+}

@@ -1,8 +1,9 @@
 import React from "react";
 import classes from './Navbar.module.css';
 import {NavLink} from "react-router-dom";
+import Sidebar from "../Sidebar/Sidebar";
 
-const Navbar = () => {
+const Navbar = (props) => {
     const activeClassName = navData => navData.isActive ? classes.activeLink : classes.item;
     return (
         <nav className={classes.nav}>
@@ -32,7 +33,11 @@ const Navbar = () => {
                     Settings
                 </NavLink>
             </div>
+            <aside className={classes.sidebar}>
+                <Sidebar friends={props.state}/>
+            </aside>
         </nav>
+
     );
 };
 

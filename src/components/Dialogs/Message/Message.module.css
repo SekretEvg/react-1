@@ -1,3 +1,17 @@
 .message {
-    color: white;
+    color: black;
+    border: 1px solid orange;
+    border-radius: 12px;
+    padding: 5px;
+    background-color: white;
+    margin-left: 300px;
+    margin-right: 300px;
+}
+
+.message:nth-child(2n - 1) {
+    align-self: start;
+}
+
+.message:nth-child(2n) {
+    align-self: end;
 }
