@@ -1,0 +1,9 @@
+.sidebarItems {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.sidebar h3 {
+    color: white;
+}
