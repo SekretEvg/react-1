@@ -4,14 +4,17 @@ import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 
 const Dialogs = (props) => {
-    const {dialogs, messages} = props.state;
+    const {dialogs, messages} = props.dialogsPage;
     const dialogsElements = dialogs.map(d => <DialogItem name={d.name} id={d.id} key={d.id}/>);
     const messagesElements = messages.map(m => <Message message={m.message} key={m.id}/>);
 
     const newMessageElement = React.createRef();
     const addMessage = () => {
+        props.addMessage();
+    };
+    const onMessageChange = () => {
         const text = newMessageElement.current.value;
-        alert(text);
+        props.updateNewMessageText(text);
     };
 
     return (
@@ -21,8 +24,15 @@ const Dialogs = (props) => {
             </div>
             <div className={classes.messages}>
                 {messagesElements}
-                <textarea ref={newMessageElement}></textarea>
-                <button onClick={addMessage}>Add Message</button>
+                <div className={classes.messageForm}>
+                <textarea ref={newMessageElement}
+                          value={props.dialogsPage.newMessageText}
+                          onChange={onMessageChange}
+                />
+                    <div>
+                        <button onClick={addMessage}>Add Message</button>
+                    </div>
+                </div>
             </div>
         </div>
     );
