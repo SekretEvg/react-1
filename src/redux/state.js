@@ -23,6 +23,7 @@ const state = {
             {id: 4, message: 'Good'},
             {id: 5, message: 'Ok lets go'},
         ],
+        newMessageText: 'i am message text',
     },
     sidebar: [
         {id: 1, name: 'Andrew'},
@@ -44,6 +45,19 @@ export const addPost = () => {
 };
 export const updateNewPostText = (newText) => {
     state.profilePage.newPostText = newText;
+    rerenderEntireTree(state);
+};
+
+export const addMessage = () => {
+    const newMessage = {
+        id: 6, message: state.dialogsPage.newMessageText,
+    };
+    state.dialogsPage.messages.push(newMessage);
+    state.dialogsPage.newMessageText = '';
+    rerenderEntireTree(state);
+};
+export const updateNewMessageText = (newMessageText) => {
+    state.dialogsPage.newMessageText = newMessageText;
     rerenderEntireTree(state);
 };
 export default state;
