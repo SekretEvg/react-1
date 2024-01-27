@@ -23,3 +23,7 @@
     margin-top: 20px;
     margin-left: 300px;
 }
+
+.messageForm textarea {
+    width: 350px;
+}
