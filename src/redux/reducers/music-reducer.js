@@ -2,7 +2,17 @@ const ADD_NEW_MUSIC = 'ADD_NEW_MUSIC';
 const UPDATE_NEW_MUSIC_TEXT = 'UPDATE_NEW_MUSIC_TEXT';
 const REMOVE_MUSIC = 'REMOVE_MUSIC';
 
-const musicReducer = (state, action) => {
+const initialState = {
+    musicList: [
+        {id: 1, musicGroup: 'Sia'},
+        {id: 2, musicGroup: 'One Republic'},
+        {id: 3, musicGroup: 'Noize MC'},
+        {id: 4, musicGroup: 'Queen'},
+    ],
+    newMusicGroup: '',
+};
+
+const musicReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_NEW_MUSIC:
             const newMusicGroup = {

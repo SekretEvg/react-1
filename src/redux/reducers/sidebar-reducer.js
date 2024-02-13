@@ -1,4 +1,10 @@
-const sidebarReducer = (state, action) => {
+const initialState = [
+    {id: 1, name: 'Andrew'},
+    {id: 2, name: 'Sasha'},
+    {id: 3, name: 'Sveta'},
+];
+
+const sidebarReducer = (state = initialState, action) => {
     return state;
 }
 
