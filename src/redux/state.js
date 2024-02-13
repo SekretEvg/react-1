@@ -1,6 +1,10 @@
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 
+const SEND_MESSAGE = 'SEND_MESSAGE';
+const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE_NEW_MESSAGE_TEXT';
+
+
 const store = {
     _state: {
         profilePage: {
@@ -25,7 +29,7 @@ const store = {
                 {id: 4, message: 'Good'},
                 {id: 5, message: 'Ok lets go'},
             ],
-            newMessageText: 'i am message text',
+            newMessageText: '',
         },
         sidebar: [
             {id: 1, name: 'Andrew'},
@@ -54,6 +58,7 @@ const store = {
     },
 
     dispatch(action) {
+        console.log(action)
         if (action.type === ADD_POST) {
             const newPost = {
                 id: 5,
@@ -63,25 +68,18 @@ const store = {
             this._state.profilePage.posts.push(newPost);
             this._state.profilePage.newPostText = '';
             this._callSubscriber(this._state);
-        } else {
-            if (action.type === UPDATE_NEW_POST_TEXT) {
-                this._state.profilePage.newPostText = action.newText;
-                this._callSubscriber(this._state);
-            }
+        } else if (action.type === UPDATE_NEW_POST_TEXT) {
+            this._state.profilePage.newPostText = action.newText;
+            this._callSubscriber(this._state);
+        } else if (action.type === UPDATE_NEW_MESSAGE_TEXT) {
+            this._state.dialogsPage.newMessageText = action.body;
+            this._callSubscriber(this._state);
+        } else if (action.type === SEND_MESSAGE) {
+            const body = this._state.dialogsPage.newMessageText;
+            this._state.dialogsPage.messages.push({id: 6, message: body});
+            this._state.dialogsPage.newMessageText = '';
+            this._callSubscriber(this._state);
         }
-    },
-
-    addMessage() {
-        const newMessage = {
-            id: 6, message: this._state.dialogsPage.newMessageText,
-        };
-        this._state.dialogsPage.messages.push(newMessage);
-        this._state.dialogsPage.newMessageText = '';
-        this._callSubscriber(this._state);
-    },
-    updateNewMessageText(newMessageText) {
-        this._state.dialogsPage.newMessageText = newMessageText;
-        this._callSubscriber(this._state);
     },
 
     addNewMusic() {
@@ -104,5 +102,8 @@ const store = {
 };
 export const addPostActionCreator = () => ({type: ADD_POST});
 export const updateNewPostTextActionCreator = (text) => ({type: UPDATE_NEW_POST_TEXT, newText: text});
+
+export const sendMessageCreator = () => ({type: SEND_MESSAGE});
+export const updateNewMessageTextCreator = (text) => ({type: UPDATE_NEW_MESSAGE_TEXT, body: text});
 export default store;
 window.store = store;
