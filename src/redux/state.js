@@ -1,9 +1,7 @@
-const ADD_POST = 'ADD-POST';
-const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
-
-const SEND_MESSAGE = 'SEND_MESSAGE';
-const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE_NEW_MESSAGE_TEXT';
-
+import profileReducer from "./reducers/profile-reducer";
+import dialogsReducer from "./reducers/dialogs-reducer";
+import sidebarReducer from "./reducers/sidebar-reducer";
+import musicReducer from "./reducers/music-reducer";
 
 const store = {
     _state: {
@@ -43,7 +41,7 @@ const store = {
                 {id: 3, musicGroup: 'Noize MC'},
                 {id: 4, musicGroup: 'Queen'},
             ],
-            newMusicGroup: 'New Song',
+            newMusicGroup: '',
         },
     },
     _callSubscriber() {
@@ -58,52 +56,13 @@ const store = {
     },
 
     dispatch(action) {
-        console.log(action)
-        if (action.type === ADD_POST) {
-            const newPost = {
-                id: 5,
-                message: this._state.profilePage.newPostText,
-                likeCount: 0,
-            };
-            this._state.profilePage.posts.push(newPost);
-            this._state.profilePage.newPostText = '';
-            this._callSubscriber(this._state);
-        } else if (action.type === UPDATE_NEW_POST_TEXT) {
-            this._state.profilePage.newPostText = action.newText;
-            this._callSubscriber(this._state);
-        } else if (action.type === UPDATE_NEW_MESSAGE_TEXT) {
-            this._state.dialogsPage.newMessageText = action.body;
-            this._callSubscriber(this._state);
-        } else if (action.type === SEND_MESSAGE) {
-            const body = this._state.dialogsPage.newMessageText;
-            this._state.dialogsPage.messages.push({id: 6, message: body});
-            this._state.dialogsPage.newMessageText = '';
-            this._callSubscriber(this._state);
-        }
-    },
-
-    addNewMusic() {
-        const newMusicGroup = {
-            id: 5, musicGroup: this._state.musicPage.newMusicGroup,
-        };
-        this._state.musicPage.musicList.push(newMusicGroup);
-        this._state.musicPage.newMusicGroup = '';
-        this._callSubscriber(this._state);
-    },
-    updateNewMusicText(newMusicText) {
-        this._state.musicPage.newMusicGroup = newMusicText;
-        this._callSubscriber(this._state);
-    },
-    removeMusic(id) {
-        this._state.musicPage.musicList = this._state.musicPage.musicList.filter(m => m.id !== id);
-        console.log(this._state.musicPage.musicList)
+        this._state.profilePage = profileReducer(this._state.profilePage, action);
+        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action);
+        this._state.sidebar = sidebarReducer(this._state.sidebar, action);
+        this._state.musicPage = musicReducer(this._state.musicPage, action);
         this._callSubscriber(this._state);
     },
 };
-export const addPostActionCreator = () => ({type: ADD_POST});
-export const updateNewPostTextActionCreator = (text) => ({type: UPDATE_NEW_POST_TEXT, newText: text});
 
-export const sendMessageCreator = () => ({type: SEND_MESSAGE});
-export const updateNewMessageTextCreator = (text) => ({type: UPDATE_NEW_MESSAGE_TEXT, body: text});
 export default store;
 window.store = store;

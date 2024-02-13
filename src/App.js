@@ -30,9 +30,7 @@ const App = (props) => {
                         <Route path='/news' element={<News/>}/>
                         <Route path='/music' element={<Music
                             musicPage={props.state.musicPage}
-                            addNewMusicGroup={props.addNewMusicGroup}
-                            updateNewMusicText={props.updateNewMusicText}
-                            removeMusic={props.removeMusic}
+                            dispatch={props.dispatch}
                         />}/>
                         <Route path='/settings' element={<Settings/>}/>
                     </Routes>
