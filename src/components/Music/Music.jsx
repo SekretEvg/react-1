@@ -1,20 +1,19 @@
 import React from "react";
 import classes from './Music.module.css';
 import MusicItem from "./MusicItem/MusicItem";
+import {addNewMusicCreator, updateNewMusicTextCreator} from "../../redux/reducers/music-reducer";
 
 const Music = (props) => {
     const musicPageElements = props.musicPage.musicList.map(m => <MusicItem id={m.id} musicGroup={m.musicGroup}
                                                                             key={m.id}
-                                                                            removeMusic={props.removeMusic}/>);
+                                                                            dispatch={props.dispatch}/>);
 
-    const newMusicElement = React.createRef();
-
-    const changeHandler = () => {
-        const text = newMusicElement.current.value;
-        props.updateNewMusicText(text);
+    const changeHandler = (e) => {
+        const text = e.target.value;
+        props.dispatch(updateNewMusicTextCreator(text));
     };
     const addHandler = () => {
-        props.addNewMusicGroup();
+        props.dispatch(addNewMusicCreator());
     };
 
     return (
@@ -23,7 +22,8 @@ const Music = (props) => {
                 {musicPageElements}
             </div>
             <div>
-                <textarea ref={newMusicElement} onChange={changeHandler} value={props.musicPage.newMusicGroup}/>
+                <textarea placeholder={'New music artist'} onChange={changeHandler}
+                          value={props.musicPage.newMusicGroup}/>
                 <div>
                     <button onClick={addHandler}>Add New Song</button>
                 </div>
