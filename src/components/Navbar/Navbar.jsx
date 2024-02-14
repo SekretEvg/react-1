@@ -33,9 +33,9 @@ const Navbar = (props) => {
                     Settings
                 </NavLink>
             </div>
-            <aside className={classes.sidebar}>
-                <Sidebar friends={props.state}/>
-            </aside>
+            {/*<aside className={classes.sidebar}>*/}
+            {/*    <Sidebar friends={props.state}/>*/}
+            {/*</aside>*/}
         </nav>
 
     );
