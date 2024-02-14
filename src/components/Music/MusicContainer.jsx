@@ -1,34 +1,21 @@
 import React from "react";
 import {addNewMusicCreator, removeMusicCreator, updateNewMusicTextCreator} from "../../redux/reducers/music-reducer";
 import Music from "./Music";
-import StoreContext from "../../StoreContext";
+import {connect} from "react-redux";
 
-const MusicContainer = (props) => {
-
-    return (
-        <StoreContext.Consumer>
-            {
-                (store) => {
-                    const state = store.getState().musicPage;
-
-                    const changeHandler = (text) => {
-                        store.dispatch(updateNewMusicTextCreator(text));
-                    };
-                    const addHandler = () => {
-                        store.dispatch(addNewMusicCreator());
-                    };
-
-                    const removeMusic = (id) => {
-                        store.dispatch(removeMusicCreator(id))
-                    };
-
-                    return <Music updateNewMusicText={changeHandler} addNewMusic={addHandler} removeMusic={removeMusic}
-                                  musicPage={state}/>
-                }
-            }
-        </StoreContext.Consumer>
-
-    );
+const mapStateToProps = (state) => {
+    return {
+        musicPage: state.musicPage,
+    }
 };
+const mapDispatchToProps = (dispatch) => {
+    return {
+        updateNewMusicText: (text) => dispatch(updateNewMusicTextCreator(text)),
+        addNewMusic: () => dispatch(addNewMusicCreator()),
+        removeMusic: (id) => dispatch(removeMusicCreator(id)),
+    }
+};
+
+const MusicContainer = connect(mapStateToProps, mapDispatchToProps)(Music);
 
 export default MusicContainer;
