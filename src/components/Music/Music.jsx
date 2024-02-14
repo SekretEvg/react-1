@@ -1,19 +1,19 @@
 import React from "react";
 import classes from './Music.module.css';
 import MusicItem from "./MusicItem/MusicItem";
-import {addNewMusicCreator, updateNewMusicTextCreator} from "../../redux/reducers/music-reducer";
 
 const Music = (props) => {
-    const musicPageElements = props.musicPage.musicList.map(m => <MusicItem id={m.id} musicGroup={m.musicGroup}
-                                                                            key={m.id}
-                                                                            dispatch={props.dispatch}/>);
+    const state = props.musicPage;
+    const musicPageElements = state.musicList.map(m => <MusicItem id={m.id} musicGroup={m.musicGroup}
+                                                                  key={m.id}
+                                                                  removeMusic={props.removeMusic}/>);
 
     const changeHandler = (e) => {
         const text = e.target.value;
-        props.dispatch(updateNewMusicTextCreator(text));
+        props.updateNewMusicText(text);
     };
     const addHandler = () => {
-        props.dispatch(addNewMusicCreator());
+        props.addNewMusic();
     };
 
     return (
