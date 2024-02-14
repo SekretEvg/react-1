@@ -14,23 +14,29 @@ const initialState = {
 
 const musicReducer = (state = initialState, action) => {
     switch (action.type) {
-        case ADD_NEW_MUSIC:
+        case ADD_NEW_MUSIC: {
             const newMusicGroup = {
                 id: 5, musicGroup: state.newMusicGroup,
             };
-            state.musicList.push(newMusicGroup);
-            state.newMusicGroup = '';
-            break;
-        case UPDATE_NEW_MUSIC_TEXT:
-            state.newMusicGroup = action.newMusicText;
-            break;
-        case REMOVE_MUSIC:
-            state.musicList = state.musicList.filter(m => m.id !== action.id);
-            break;
+            const stateCopy = {...state};
+            stateCopy.musicList = [...state.musicList];
+            stateCopy.musicList.push(newMusicGroup);
+            stateCopy.newMusicGroup = '';
+            return stateCopy;
+        }
+        case UPDATE_NEW_MUSIC_TEXT: {
+            const stateCopy = {...state};
+            stateCopy.newMusicGroup = action.newMusicText;
+            return stateCopy;
+        }
+        case REMOVE_MUSIC: {
+            const stateCopy = {...state, musicList: [...state.musicList]};
+            stateCopy.musicList = stateCopy.musicList.filter(m => m.id !== action.id);
+            return stateCopy;
+        }
         default:
             return state;
     }
-    return state;
 };
 
 export const addNewMusicCreator = () => ({type: ADD_NEW_MUSIC});
