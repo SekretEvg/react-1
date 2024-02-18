@@ -2,3 +2,13 @@
     width: 100px;
     height: 100px;
 }
+
+.selectedPage {
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.paginataion {
+    cursor: pointer;
+    margin-right: 5px;
+}

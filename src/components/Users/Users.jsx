@@ -13,12 +13,47 @@ class Users extends React.Component {
                 "API-KEY": "9631b5f1-e72b-461c-9bbc-c43d01a62477"
             }
         });
-        instance.get('users').then(response => this.props.setUsers(response.data.items));
+        instance.get(`users?page=${this.props.currentPage}&count=${this.props.pageSize}`).then(response => {
+            this.props.setUsers(response.data.items);
+            this.props.setTotalUsersCount(response.data.totalCount);
+        });
+    }
+
+    onPageChanged = (pageNumber) => {
+        this.props.setCurrentPage(pageNumber);
+        const instance = axios.create({
+            withCredentials: true,
+            baseURL: 'https://social-network.samuraijs.com/api/1.0/',
+            headers: {
+                "API-KEY": "9631b5f1-e72b-461c-9bbc-c43d01a62477"
+            }
+        });
+        instance.get(`users?page=${pageNumber}&count=${this.props.pageSize}`).then(response => {
+            this.props.setUsers(response.data.items);
+        });
     }
 
     render() {
+        const pagesCount = Math.ceil(this.props.totalUsersCount / this.props.pageSize);
+        const pages = [];
+        for (let i = 1; i <= pagesCount; i++) {
+            pages.push(i);
+        }
+
         return (
             <div>
+                <div>
+                    {pages.map(page => (
+                        <span
+                            key={page}
+                            onClick={(e) => {
+                                this.onPageChanged(page)
+                            }}
+                            className={this.props.currentPage === page ? classes.selectedPage : classes.paginataion}>
+                            {page}
+                        </span>)
+                    )}
+                </div>
                 {this.props.users.map(user => <div key={user.id}>
                 <span>
                     <div>
