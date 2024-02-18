@@ -1,42 +1,32 @@
 import React from "react";
 import classes from './Users.module.css';
+import axios from "axios";
+import userPhoto from '../../assets/images/user.png';
+
 
 const Users = (props) => {
-    if (props.users.length === 0) {
-        props.setUsers([
-            {
-                id: 1,
-                photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/%D0%9D%D0%B0%D0%B3%D0%B8%D0%B5%D0%B2_%D0%94%D0%BC%D0%B8%D1%82%D1%80%D0%B8%D0%B9.jpg/220px-%D0%9D%D0%B0%D0%B3%D0%B8%D0%B5%D0%B2_%D0%94%D0%BC%D0%B8%D1%82%D1%80%D0%B8%D0%B9.jpg',
-                isFollowed: false,
-                fullName: 'Evgeny',
-                status: 'I am a boss',
-                location: {city: 'Moscow', country: 'Russia'}
-            },
-            {
-                id: 2,
-                photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/%D0%9D%D0%B0%D0%B3%D0%B8%D0%B5%D0%B2_%D0%94%D0%BC%D0%B8%D1%82%D1%80%D0%B8%D0%B9.jpg/220px-%D0%9D%D0%B0%D0%B3%D0%B8%D0%B5%D0%B2_%D0%94%D0%BC%D0%B8%D1%82%D1%80%D0%B8%D0%B9.jpg',
-                isFollowed: true,
-                fullName: 'Sasha',
-                status: 'I am a boss',
-                location: {city: 'New-York', country: 'USA'}
-            },
-            {
-                id: 3,
-                photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/%D0%9D%D0%B0%D0%B3%D0%B8%D0%B5%D0%B2_%D0%94%D0%BC%D0%B8%D1%82%D1%80%D0%B8%D0%B9.jpg/220px-%D0%9D%D0%B0%D0%B3%D0%B8%D0%B5%D0%B2_%D0%94%D0%BC%D0%B8%D1%82%D1%80%D0%B8%D0%B9.jpg',
-                isFollowed: false,
-                fullName: 'Dimasik',
-                status: 'I am a boss',
-                location: {city: 'Kiev', country: 'Ukraine'}
-            },
-        ])
-    }
+    const getUsers = () => {
+        const instance = axios.create({
+            withCredentials: true,
+            baseURL: 'https://social-network.samuraijs.com/api/1.0/',
+            headers: {
+                "API-KEY": "9631b5f1-e72b-461c-9bbc-c43d01a62477"
+            }
+        });
+        if (props.users.length === 0) {
+            instance.get('users').then(response => props.setUsers(response.data.items));
+        }
+    };
+
 
     return (
         <div>
+            <button onClick={getUsers}>GET USERS</button>
             {props.users.map(user => <div key={user.id}>
                 <span>
                     <div>
-                        <img src={user.photoUrl} alt="avatar" className={classes.userPhoto}/>
+                        <img src={user.photos.small ? user.photos.small : userPhoto} alt="avatar"
+                             className={classes.userPhoto}/>
                     </div>
                     <div>
                         {user.isFollowed ?
@@ -51,12 +41,12 @@ const Users = (props) => {
                 </span>
                 <span>
                     <span>
-                        <div>{user.fullName}</div>
+                        <div>{user.name}</div>
                         <div>{user.status}</div>
                     </span>
                     <span>
-                        <div>{user.location.country}</div>
-                        <div>{user.location.city}</div>
+                        <div>{'user.location.country'}</div>
+                        <div>{'user.location.city'}</div>
                     </span>
                 </span>
             </div>)}
