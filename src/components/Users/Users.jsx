@@ -5,8 +5,7 @@ import userPhoto from '../../assets/images/user.png';
 
 
 class Users extends React.Component {
-    constructor(props) {
-        super(props);
+    componentDidMount() {
         const instance = axios.create({
             withCredentials: true,
             baseURL: 'https://social-network.samuraijs.com/api/1.0/',
