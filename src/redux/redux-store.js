@@ -4,6 +4,7 @@ import dialogsReducer from "./reducers/dialogs-reducer";
 import sidebarReducer from "./reducers/sidebar-reducer";
 import musicReducer from "./reducers/music-reducer";
 import usersReducer from "./reducers/users-reducer";
+import authReducer from "./reducers/auth-reducer";
 
 const reducers = combineReducers({
     profilePage: profileReducer,
@@ -11,6 +12,7 @@ const reducers = combineReducers({
     sidebar: sidebarReducer,
     musicPage: musicReducer,
     usersPage: usersReducer,
+    auth: authReducer,
 });
 const store = createStore(reducers);
 
