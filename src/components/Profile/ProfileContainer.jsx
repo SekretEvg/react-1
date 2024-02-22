@@ -1,9 +1,9 @@
 import React from "react";
 import Profile from "./Profile";
-import axios from "axios";
 import {connect} from "react-redux";
 import {setUserProfile} from "../../redux/reducers/profile-reducer";
 import {useLocation, useNavigate, useParams} from 'react-router-dom';
+import {ProfileAPI} from "../../api/api";
 
 class ProfileContainer extends React.Component {
 
@@ -12,18 +12,9 @@ class ProfileContainer extends React.Component {
         if (!userId) {
             userId = 2;
         }
-        const instance = axios.create({
-            withCredentials: true,
-            baseURL: 'https://social-network.samuraijs.com/api/1.0/',
-            headers: {
-                "API-KEY": "9631b5f1-e72b-461c-9bbc-c43d01a62477"
-            }
+        ProfileAPI.getProfile(userId).then(data => {
+            this.props.setUserProfile(data);
         });
-        instance
-            .get(`profile/${userId}`)
-            .then(response => {
-                this.props.setUserProfile(response.data);
-            });
     }
 
     render() {
