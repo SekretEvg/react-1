@@ -2,6 +2,7 @@ import React from "react";
 import classes from './ProfileInfo.module.css';
 import Preloader from "../../common/Preloader/Preloader";
 import ProfileStatus from "./ProfileStatus/ProfileStatus";
+import dogImage from '../../../assets/images/dog.png';
 
 const ProfileInfo = (props) => {
     if (!props.profile) {
@@ -16,9 +17,9 @@ const ProfileInfo = (props) => {
                 {/*    alt="main content image"/>*/}
             </div>
             <div className={classes.descriptionBlock}>
-                <img src={props.profile.photos.large}/>
+                <img className={classes.image} src={props.profile.photos.large || dogImage}/>
 
-                <ProfileStatus status="Hello my friends!"/>
+                <ProfileStatus status={props.status} updateStatus={props.updateStatus}/>
 
                 <p>Обо мне: {props.profile.aboutMe}</p>
                 <ul>Мои контакты:
